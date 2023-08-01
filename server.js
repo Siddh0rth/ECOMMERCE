@@ -6,24 +6,23 @@ import router from "./router/route.js";
 
 const app = express();
 
-// middleware
-
+/** middlewares */
 app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
-app.disable("x-powered-by"); //less hackers know our stack
+app.disable("x-powered-by"); // less hackers know about our stack
 
 const port = 8080;
 
-//HTTP Get request
+/** HTTP GET Request */
 app.get("/", (req, res) => {
   res.status(201).json("Home GET Request");
 });
 
-//api routes
+/** api routes */
 app.use("/api", router);
 
-//Start server only when we have valid connection
+/** start server only when we have valid connection */
 connect()
   .then(() => {
     try {
@@ -31,7 +30,7 @@ connect()
         console.log(`Server connected to http://localhost:${port}`);
       });
     } catch (error) {
-      console.log("Can not connect to the server");
+      console.log("Cannot connect to the server");
     }
   })
   .catch((error) => {

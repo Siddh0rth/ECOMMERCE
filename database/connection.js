@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
+
 import { MongoMemoryServer } from "mongodb-memory-server";
-//MongoMemoryServer dynamically creates a temporary MongoDB server on the fly,
-//  and your tests can interact with it as if it were a real database server.
+// import ENV from '../config.js'
 
-async function connect() {
-  const mongod = await MongoMemoryServer.create();
-  const getUri = mongod.getUri();
+async function connect(){
 
-  const db = await mongoose.connect(getUri);
-  console.log("Database Connected");
-  return db;
+    const mongod = await MongoMemoryServer.create();
+    const getUri = mongod.getUri();
+
+    mongoose.set('strictQuery', true)
+    const db = await mongoose.connect(getUri);
+    // const db = await mongoose.connect(ENV.ATLAS_URI);
+    console.log("Database Connected")
+    return db;
 }
 
 export default connect;
